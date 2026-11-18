@@ -1,6 +1,6 @@
 # IoT Lab Exam – Programs & Notes
 
-Raspberry Pi (Python) programs for every topic in the lab exam syllabus, written in the same style as the lab manual. There are also Arduino/ESP32 versions for the vlabs questions.
+Raspberry Pi (Python) programs for every topic in the lab exam syllabus, written in the same style as the lab manual.
 
 | # | Topic | Folder | Main file |
 |---|---|---|---|
@@ -10,7 +10,7 @@ Raspberry Pi (Python) programs for every topic in the lab exam syllabus, written
 | 4 | OLED SSD1306 | `04_oled/` | `oled_iot_monitor.py` |
 | 5 | Zigbee (XBee) | `05_zigbee/` | `zigbee_coordinator.py`, `zigbee_router.py`, **`THEORY.md`** |
 | 6 | BME280 → ThingSpeak | `06_bme280_thingspeak/` | `bme280_thingspeak.py` |
-| 7 | vlabs questions | `07_vlabs/` | Arduino/ESP32 `.ino` + Pi programs |
+| 7 | vlabs questions | `07_vlabs/` | `exp1`–`exp6` + `rpi_basic_programs.py` |
 
 Each folder has a README covering wiring, setup commands, expected output and viva points.
 
@@ -46,6 +46,9 @@ Always put a 220 Ω resistor in series with each LED.
 | `PIL` | `pillow` | OLED drawing |
 | `adafruit_bme280` | `adafruit-circuitpython-bme280` | BME280 |
 | `requests` | `requests` | ThingSpeak |
+| `adafruit_mcp3xxx` | `adafruit-circuitpython-mcp3xxx` | Analog sensors via MCP3008 (vlabs) |
+| `adafruit_dht` | `adafruit-circuitpython-dht` | DHT11/22 (vlabs) |
+| `RPLCD` | `RPLCD` | LCD 16×2 I2C (vlabs) |
 | `paho.mqtt` | `paho-mqtt` (v2) | MQTT |
 | `Adafruit_IO` | `adafruit-io` | Adafruit IO MQTT |
 | `socket` (AF_BLUETOOTH) | built-in | Bluetooth |

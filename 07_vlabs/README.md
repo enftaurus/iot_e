@@ -1,37 +1,56 @@
-# Virtual Labs (vlabs) questions
+# Virtual Labs (vlabs) questions: Raspberry Pi / Python
 
-I don't have the exact vlab your syllabus refers to. These are the two official IoT Virtual Labs lists, with code for each experiment.
+All programs here are Python for the Raspberry Pi. They cover the experiments from both official IoT Virtual Labs lists.
 
-## A. iot-dei.vlabs.ac.in (Arduino / ESP32 simulation, Wokwi-style)
+## A. iot-dei.vlabs.ac.in list
 
 | # | Experiment | File |
 |---|---|---|
-| 1 | Input components: pushbutton, potentiometer, slider switch, photoresistor | `arduino_esp32/exp1_input_components.ino` |
-| 2 | Output components: RGB LED, 7-segment, OLED, LCD 16×2, buzzer | `arduino_esp32/exp2_output_components.ino` |
-| 3 | Motors: DC, servo, stepper | `arduino_esp32/exp3_motors.ino` |
-| 4 | Sensors: ultrasonic, PIR, DHT, soil moisture, MQ135 | `arduino_esp32/exp4_sensors.ino` |
-| 5 | Live data to an IoT platform over HTTP (ESP32 → ThingSpeak) | `arduino_esp32/exp5_esp32_http_thingspeak.ino` |
-| 6 | Live data over MQTT (ESP32 → Mosquitto) | `arduino_esp32/exp6_esp32_mqtt.ino` |
+| 1 | Inputs: pushbutton, slider switch, potentiometer, LDR | `exp1_input_components.py` |
+| 2 | Outputs: RGB LED, 7-segment, OLED, LCD 16×2, buzzer | `exp2_output_components.py` |
+| 3 | Motors: DC (L298N), servo, stepper | `exp3_motors.py` |
+| 4 | Sensors: ultrasonic, PIR, DHT, soil moisture, MQ135 | `exp4_sensors.py` |
+| 5 | Live data to an IoT platform over HTTP (ThingSpeak) | `exp5_http_thingspeak.py` |
+| 6 | Live data over MQTT | `exp6_mqtt_sensor.py` |
 
-To practise before the exam, open **wokwi.com**, start a new Arduino Uno or ESP32 project, paste the code, add the parts from the `+` menu, and wire them to the pins listed at the top of each file.
-In Wokwi, the ESP32 Wi-Fi SSID is `Wokwi-GUEST` with an empty password.
+## B. iot-amrt.vlabs.ac.in list
 
-## B. iot-amrt.vlabs.ac.in (Raspberry Pi)
+All of these are in `rpi_basic_programs.py`. Run one with `python3 rpi_basic_programs.py <name>`.
 
-| # | Experiment | Where |
-|---|---|---|
-| 1 | Introduction to Raspberry Pi | Theory, see below |
-| 2 | LED blink | `raspberry_pi/rpi_vlab_programs.py led` |
-| 3 | Push button + LED | `... button` |
-| 4 | DHT11 | `... dht` |
-| 5 | Ultrasonic sensor | `... ultrasonic` |
-| 6 | Motor control with relay | `... relay` |
-| 7 | Bluetooth data transfer to a smartphone | `../02_bluetooth/` |
+| Experiment | Name to pass |
+|---|---|
+| LED blink | `led` |
+| Push button + LED | `button` |
+| DHT11 | `dht` |
+| Ultrasonic sensor | `ultrasonic` |
+| Motor with relay | `relay` |
+| Bluetooth to smartphone | see `../02_bluetooth/` |
 
-### Raspberry Pi intro (viva)
+## Extra libraries for this folder
 
-- The Pi is a single-board computer with an ARM Cortex-A SoC (Pi 4 uses the BCM2711), runs Raspberry Pi OS (Linux), and has a 40-pin GPIO header.
-- GPIO is **3.3 V logic and not 5 V tolerant**. It has **no built-in ADC**, so analog sensors need an MCP3008.
-- It supports I2C (GPIO2/3), SPI (GPIO10/9/11), UART (GPIO14/15) and PWM (GPIO12/13/18/19).
-- **BCM vs BOARD numbering**: `GPIO.setmode(GPIO.BCM)` uses GPIO numbers, while `GPIO.BOARD` uses physical pin numbers.
-- **Pi vs Arduino**: the Pi is a microprocessor board running a full OS with multitasking and networking. The Arduino is a microcontroller (ATmega328P, 16 MHz) with no OS, runs in real time, and has an ADC.
+```bash
+pip3 install adafruit-circuitpython-mcp3xxx adafruit-circuitpython-dht RPLCD
+sudo apt install -y libgpiod2         # needed by adafruit_dht
+sudo raspi-config                     # enable SPI (for MCP3008) and I2C (OLED/LCD)
+```
+
+## Key point: the Pi has no ADC
+
+The potentiometer, LDR, soil moisture sensor and MQ135 all give **analog** output. The Raspberry Pi can't read analog signals, so they go through an **MCP3008** (an 8-channel, 10-bit SPI ADC). Expect an examiner to ask about this.
+
+| MCP3008 pin | Raspberry Pi |
+|---|---|
+| VDD, VREF | 3.3 V |
+| AGND, DGND | GND |
+| CLK | GPIO11 (SCLK) |
+| DOUT | GPIO9 (MISO) |
+| DIN | GPIO10 (MOSI) |
+| CS/SHDN | GPIO5 |
+
+## Raspberry Pi intro (viva)
+
+- The Pi is a single-board computer with an ARM SoC (BCM2711 on the Pi 4). It runs Raspberry Pi OS (Linux) and has a 40-pin GPIO header.
+- GPIO uses **3.3 V logic and is not 5 V tolerant**. That's why the HC-SR04 echo pin needs a voltage divider.
+- Buses: I2C on GPIO2/3, SPI on GPIO10/9/11, UART on GPIO14/15. Hardware PWM is on GPIO12/13/18/19.
+- `GPIO.BCM` uses GPIO numbers and `GPIO.BOARD` uses physical pin numbers.
+- A servo needs a 50 Hz PWM signal with a 0.5–2.5 ms pulse (0–180°). A DC motor's speed comes from the PWM duty cycle on the driver's EN pin.

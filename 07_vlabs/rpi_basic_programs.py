@@ -1,6 +1,6 @@
 """
 Raspberry Pi Virtual Lab programs (iot-amrt.vlabs.ac.in list), all in one file.
-Run one:  python3 rpi_vlab_programs.py led | button | dht | ultrasonic | relay
+Run one:  python3 rpi_basic_programs.py led | button | dht | ultrasonic | relay
 Wiring (BCM): LED=18, BUTTON=23 (to GND, pull-up), DHT11=4, TRIG=24, ECHO=25 (via divider), RELAY=17
 """
 import sys

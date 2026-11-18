@@ -8,3 +8,5 @@ pillow
 requests
 paho-mqtt>=2.0
 adafruit-io
+adafruit-circuitpython-mcp3xxx
+RPLCD
