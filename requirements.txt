@@ -1,0 +1,10 @@
+RPi.GPIO
+pyserial
+adafruit-blinka
+adafruit-circuitpython-ssd1306
+adafruit-circuitpython-bme280
+adafruit-circuitpython-dht
+pillow
+requests
+paho-mqtt>=2.0
+adafruit-io
