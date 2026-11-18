@@ -4,12 +4,12 @@ import subprocess
 # Uses bluetoothctl, which ships with Raspberry Pi OS.
 
 print("Scanning for Bluetooth devices for 10 seconds...")
-subprocess.run(["bluetoothctl", "--timeout", "10", "scan", "on"],
-               stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+devnull = open("/dev/null", "w")
+subprocess.call(["bluetoothctl", "--timeout", "10", "scan", "on"], stdout=devnull, stderr=devnull)
 
-out = subprocess.run(["bluetoothctl", "devices"], capture_output=True, text=True).stdout
+out = subprocess.check_output(["bluetoothctl", "devices"], universal_newlines=True)
 devices = [line.split(" ", 2) for line in out.splitlines() if line.startswith("Device")]
 
-print(f"Found {len(devices)} device(s):")
+print("Found {} device(s):".format(len(devices)))
 for _, mac, name in devices:
-    print(f"  {mac}  ->  {name}")
+    print("  {}  ->  {}".format(mac, name))

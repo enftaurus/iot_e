@@ -10,11 +10,11 @@ TOPIC_TEMP = "vce/iot/temp"
 TOPIC_LED = "vce/iot/led"
 
 
-def on_connect(client, userdata, flags, reason_code, properties):
-    print(f"Connected to MQTT Broker {BROKER} (rc={reason_code})")
+def on_connect(client, userdata, flags, rc):
+    print("Connected to MQTT Broker {} (rc={})".format(BROKER, rc))
 
 
-client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2, client_id="vce_pi_publisher")
+client = mqtt.Client("vce_pi_publisher")   # paho 1.x style; on paho 2.x use mqtt.Client(mqtt.CallbackAPIVersion.VERSION1, "vce_pi_publisher")
 client.on_connect = on_connect
 client.connect(BROKER, PORT, keepalive=60)
 client.loop_start()
@@ -25,11 +25,11 @@ try:
         count += 1
         temp = round(28.0 + (count % 5) * 0.4, 1)
         client.publish(TOPIC_TEMP, temp, qos=1)
-        print(f"[PUB #{count}] {TOPIC_TEMP} -> {temp}")
+        print("[PUB #{}] {} -> {}".format(count, TOPIC_TEMP, temp))
 
         cmd = "ON" if count % 2 else "OFF"
         client.publish(TOPIC_LED, cmd, qos=1)
-        print(f"[PUB #{count}] {TOPIC_LED} -> {cmd}")
+        print("[PUB #{}] {} -> {}".format(count, TOPIC_LED, cmd))
         time.sleep(3)
 except KeyboardInterrupt:
     client.loop_stop()

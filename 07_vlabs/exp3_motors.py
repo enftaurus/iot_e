@@ -57,7 +57,7 @@ try:
 
         for angle in (0, 90, 180, 90, 0):
             set_angle(angle)
-            print(f"Servo -> {angle} deg")
+            print("Servo -> {} deg".format(angle))
 
         print("Stepper: 1 revolution CW")
         stepper(STEPS_PER_REV, 1)

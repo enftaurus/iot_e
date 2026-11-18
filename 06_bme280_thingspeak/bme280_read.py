@@ -9,9 +9,9 @@ bme280 = adafruit_bme280.Adafruit_BME280_I2C(i2c, address=0x76)
 
 try:
     while True:
-        print(f"Temp: {bme280.temperature:.2f} C | "
-              f"Humidity: {bme280.relative_humidity:.2f} % | "
-              f"Pressure: {bme280.pressure:.2f} hPa")
+        print("Temp: {:.2f} C | ".format(bme280.temperature) +
+              "Humidity: {:.2f} % | ".format(bme280.relative_humidity) +
+              "Pressure: {:.2f} hPa".format(bme280.pressure))
         time.sleep(2)
 except KeyboardInterrupt:
     print("Stopped.")

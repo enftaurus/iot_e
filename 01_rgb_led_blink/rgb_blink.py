@@ -36,7 +36,7 @@ try:
     while True:
         for name, r, g, b in COLORS:
             set_color(r, g, b)
-            print(f"LED Color -> {name}")
+            print("LED Color -> {}".format(name))
             time.sleep(1)
             set_color(0, 0, 0)
             print("LED -> OFF")

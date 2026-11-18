@@ -9,15 +9,15 @@ CHANNEL = 1
 
 sock = socket.socket(socket.AF_BLUETOOTH, socket.SOCK_STREAM, socket.BTPROTO_RFCOMM)
 sock.connect((SERVER_MAC, CHANNEL))
-print(f"Connected to Bluetooth server {SERVER_MAC}")
+print("Connected to Bluetooth server {}".format(SERVER_MAC))
 print(sock.recv(1024).decode().strip())
 
 try:
     while True:
         for cmd in ("ON", "OFF"):
             sock.send(cmd.encode())
-            print(f"[TX Bluetooth] Sent -> {cmd}")
-            print(f"[Reply] {sock.recv(1024).decode().strip()}")
+            print("[TX Bluetooth] Sent -> {}".format(cmd))
+            print("[Reply] {}".format(sock.recv(1024).decode().strip()))
             time.sleep(2)
 except KeyboardInterrupt:
     sock.close()

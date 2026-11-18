@@ -60,18 +60,18 @@ try:
 
             draw.rectangle((0, 0, oled.width, oled.height), fill=0)
             draw.text((0, 0), "IoT VLab Output", font=font, fill=255)
-            draw.text((0, 20), f"Count: {n}", font=font, fill=255)
-            draw.text((0, 36), f"RGB  : {color}", font=font, fill=255)
+            draw.text((0, 20), "Count: {}".format(n), font=font, fill=255)
+            draw.text((0, 36), "RGB  : {}".format(color), font=font, fill=255)
             oled.image(image)
             oled.show()
 
             lcd.cursor_pos = (0, 0)
             lcd.write_string("Hello IoT Lab")
             lcd.cursor_pos = (1, 0)
-            lcd.write_string(f"Count: {n}      ")
+            lcd.write_string("Count: {}      ".format(n))
 
             beep()
-            print(f"Count = {n} | RGB = {color} | 7-seg = {n}")
+            print("Count = {} | RGB = {} | 7-seg = {}".format(n, color, n))
             time.sleep(0.85)
 except KeyboardInterrupt:
     oled.fill(0)

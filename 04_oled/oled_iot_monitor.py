@@ -29,14 +29,14 @@ try:
         draw.text((16, 4), "IOT ENV MONITOR", font=font, fill=255)
         draw.line((0, 16, 127, 16), fill=255)
 
-        draw.text((8, 22), f"Temp : {temp_c:.1f} C", font=font, fill=255)
-        draw.text((8, 35), f"Humid: {humidity} %", font=font, fill=255)
-        draw.text((8, 49), f"Node : ONLINE #{cycle}", font=font, fill=255)
+        draw.text((8, 22), "Temp : {:.1f} C".format(temp_c), font=font, fill=255)
+        draw.text((8, 35), "Humid: {} %".format(humidity), font=font, fill=255)
+        draw.text((8, 49), "Node : ONLINE #{}".format(cycle), font=font, fill=255)
 
         oled.image(image)
         oled.show()
 
-        print(f"OLED Frame #{cycle} | Temp: {temp_c:.1f} C | Humidity: {humidity} %")
+        print("OLED Frame #{} | Temp: {:.1f} C | Humidity: {} %".format(cycle, temp_c, humidity))
         time.sleep(2)
 except KeyboardInterrupt:
     oled.fill(0)

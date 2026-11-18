@@ -26,8 +26,8 @@ try:
         pressure = round(bme280.pressure, 2)
         altitude = round(bme280.altitude, 2)
 
-        print(f"[Reading #{count}] Temp: {temperature} C | Humidity: {humidity} % | "
-              f"Pressure: {pressure} hPa | Altitude: {altitude} m")
+        print("[Reading #{}] Temp: {} C | Humidity: {} % | ".format(count, temperature, humidity) +
+              "Pressure: {} hPa | Altitude: {} m".format(pressure, altitude))
 
         params = {
             "api_key": THINGSPEAK_WRITE_KEY,
@@ -39,11 +39,11 @@ try:
             r = requests.get(THINGSPEAK_URL, params=params, timeout=10)
             entry_id = r.text.strip()
             if entry_id != "0":
-                print(f" -> Uploaded to ThingSpeak (Entry ID: {entry_id})")
+                print(" -> Uploaded to ThingSpeak (Entry ID: {})".format(entry_id))
             else:
                 print(" -> Upload rejected (check API key / 15 s rate limit)")
         except requests.RequestException as e:
-            print(f" -> Network error: {e}")
+            print(" -> Network error: {}".format(e))
 
         time.sleep(20)   # free ThingSpeak accounts accept one update every 15 s
 except KeyboardInterrupt:

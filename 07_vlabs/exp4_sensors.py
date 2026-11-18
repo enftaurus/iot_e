@@ -59,8 +59,8 @@ try:
         soil_pct = round(100 - soil.value / 65535 * 100)   # dry = high reading (calibrate)
         air_raw = mq135.value >> 6                          # 0-1023
 
-        print(f"Dist: {dist:.1f} cm | Motion: {'YES' if motion else 'NO'} | "
-              f"Temp: {temp} C | Hum: {hum} % | Soil: {soil_pct} % | Air(MQ135): {air_raw}")
+        print("Dist: {:.1f} cm | Motion: {} | ".format(dist, 'YES' if motion else 'NO') +
+              "Temp: {} C | Hum: {} % | Soil: {} % | Air(MQ135): {}".format(temp, hum, soil_pct, air_raw))
         time.sleep(2)
 except KeyboardInterrupt:
     dht.exit()

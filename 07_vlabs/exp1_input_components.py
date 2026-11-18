@@ -40,9 +40,9 @@ try:
         pot_pct = round(pot.value / 65535 * 100)      # .value is 0-65535
         light = ldr.value >> 6                         # scale to 0-1023 like Arduino
 
-        print(f"Button: {'PRESSED' if pressed else 'RELEASED'} | "
-              f"Slide: {'ON' if slide_on else 'OFF'} | "
-              f"Pot: {pot_pct}% ({pot.voltage:.2f} V) | LDR: {light}")
+        print("Button: {} | ".format('PRESSED' if pressed else 'RELEASED') +
+              "Slide: {} | ".format('ON' if slide_on else 'OFF') +
+              "Pot: {}% ({:.2f} V) | LDR: {}".format(pot_pct, pot.voltage, light))
         time.sleep(0.5)
 except KeyboardInterrupt:
     GPIO.cleanup()

@@ -1,24 +1,24 @@
 import serial
 import RPi.GPIO as GPIO
 
+# Works on Python 2.7 and 3.5+ (no f-strings).
+# XBee on GPIO pins -> '/dev/serial0' ; XBee on USB Explorer -> '/dev/ttyUSB0'
+PORT = '/dev/serial0'
+
 LED_PIN = 18
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
 GPIO.setup(LED_PIN, GPIO.OUT)
 
-# XBee Router plugged into Raspberry Pi via USB Explorer.
-# Find the port with: ls /dev/ttyUSB*
-PORT = '/dev/ttyUSB0'
-
 zigbee = serial.Serial(PORT, baudrate=9600, timeout=1)
-print(f"Zigbee Router/End-Device (Receiver) Ready on Raspberry Pi ({PORT})...")
+print("Zigbee Router/End-Device (Receiver) Ready on Raspberry Pi ({})...".format(PORT))
 
 try:
     while True:
         if zigbee.in_waiting > 0:
-            frame = zigbee.readline().decode('utf-8', errors='ignore').strip()
+            frame = zigbee.readline().decode('utf-8', 'ignore').strip()
             if frame:
-                print(f"[RX Zigbee Frame] Received: {frame}")
+                print("[RX Zigbee Frame] Received: {}".format(frame))
                 if frame.startswith("CMD:ON"):
                     GPIO.output(LED_PIN, GPIO.HIGH)
                     print(" -> Actuator State: GPIO18 HIGH (LED TURNED ON)")

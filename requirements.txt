@@ -6,7 +6,7 @@ adafruit-circuitpython-bme280
 adafruit-circuitpython-dht
 pillow
 requests
-paho-mqtt>=2.0
+paho-mqtt
 adafruit-io
 adafruit-circuitpython-mcp3xxx
 RPLCD

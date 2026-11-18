@@ -14,15 +14,15 @@ GPIO.setwarnings(False)
 GPIO.setup(LED_PIN, GPIO.OUT)
 
 
-def on_connect(client, userdata, flags, reason_code, properties):
-    print(f"Connected to MQTT Broker {BROKER} (rc={reason_code})")
+def on_connect(client, userdata, flags, rc):
+    print("Connected to MQTT Broker {} (rc={})".format(BROKER, rc))
     client.subscribe([(TOPIC_TEMP, 1), (TOPIC_LED, 1)])
-    print(f"Subscribed to {TOPIC_TEMP} and {TOPIC_LED}")
+    print("Subscribed to {} and {}".format(TOPIC_TEMP, TOPIC_LED))
 
 
 def on_message(client, userdata, msg):
     payload = msg.payload.decode()
-    print(f"[SUB] {msg.topic} -> {payload}")
+    print("[SUB] {} -> {}".format(msg.topic, payload))
     if msg.topic == TOPIC_LED:
         if payload == "ON":
             GPIO.output(LED_PIN, GPIO.HIGH)
@@ -32,7 +32,7 @@ def on_message(client, userdata, msg):
             print(" -> GPIO18 LOW (LED TURNED OFF)")
 
 
-client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2, client_id="vce_pi_subscriber")
+client = mqtt.Client("vce_pi_subscriber")   # paho 1.x style; on paho 2.x use mqtt.Client(mqtt.CallbackAPIVersion.VERSION1, "vce_pi_subscriber")
 client.on_connect = on_connect
 client.on_message = on_message
 client.connect(BROKER, PORT, keepalive=60)

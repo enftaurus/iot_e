@@ -25,13 +25,13 @@ try:
         r = requests.get("https://api.thingspeak.com/update",
                          params={"api_key": WRITE_KEY, "field1": temp, "field2": hum},
                          timeout=10)
-        print(f"[HTTP {r.status_code}] Temp: {temp} C | Humidity: {hum} % -> Entry ID: {r.text}")
+        print("[HTTP {}] Temp: {} C | Humidity: {} % -> Entry ID: {}".format(r.status_code, temp, hum, r.text))
 
         # Read back the latest entry (HTTP GET /feeds/last.json)
-        last = requests.get(f"https://api.thingspeak.com/channels/{CHANNEL_ID}/feeds/last.json",
+        last = requests.get("https://api.thingspeak.com/channels/{}/feeds/last.json".format(CHANNEL_ID),
                             params={"api_key": READ_KEY}, timeout=10).json()
-        print(f"   Last on cloud: field1={last.get('field1')} field2={last.get('field2')} "
-              f"at {last.get('created_at')}")
+        print("   Last on cloud: field1={} field2={} ".format(last.get('field1'), last.get('field2')) +
+              "at {}".format(last.get('created_at')))
 
         time.sleep(20)   # free tier: one update per 15 s
 except KeyboardInterrupt:

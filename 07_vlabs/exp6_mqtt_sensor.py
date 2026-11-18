@@ -17,18 +17,18 @@ GPIO.setup(LED_PIN, GPIO.OUT)
 dht = adafruit_dht.DHT11(board.D4)
 
 
-def on_connect(client, userdata, flags, reason_code, properties):
-    print(f"Connected to MQTT Broker {BROKER} (rc={reason_code})")
+def on_connect(client, userdata, flags, rc):
+    print("Connected to MQTT Broker {} (rc={})".format(BROKER, rc))
     client.subscribe("vce/pi/led")
 
 
 def on_message(client, userdata, msg):
     cmd = msg.payload.decode().upper()
-    print(f"[SUB] {msg.topic} -> {cmd}")
+    print("[SUB] {} -> {}".format(msg.topic, cmd))
     GPIO.output(LED_PIN, cmd == "ON")
 
 
-client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2, client_id="vce_pi_sensor")
+client = mqtt.Client("vce_pi_sensor")   # paho 1.x style; on paho 2.x use mqtt.Client(mqtt.CallbackAPIVersion.VERSION1, "vce_pi_sensor")
 client.on_connect = on_connect
 client.on_message = on_message
 client.connect(BROKER, 1883, 60)
@@ -40,7 +40,7 @@ try:
             temp, hum = dht.temperature, dht.humidity
             client.publish("vce/pi/temp", temp)
             client.publish("vce/pi/hum", hum)
-            print(f"[PUB] temp={temp} C hum={hum} %")
+            print("[PUB] temp={} C hum={} %".format(temp, hum))
         except RuntimeError:
             pass
         time.sleep(5)

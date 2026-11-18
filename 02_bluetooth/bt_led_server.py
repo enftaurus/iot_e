@@ -16,12 +16,12 @@ CHANNEL = 1                       # RFCOMM channel (SPP default)
 server = socket.socket(socket.AF_BLUETOOTH, socket.SOCK_STREAM, socket.BTPROTO_RFCOMM)
 server.bind((PI_BT_MAC, CHANNEL))
 server.listen(1)
-print(f"Bluetooth RFCOMM Server waiting on channel {CHANNEL}...")
+print("Bluetooth RFCOMM Server waiting on channel {}...".format(CHANNEL))
 
 client = None
 try:
     client, addr = server.accept()
-    print(f"[BT] Connected to device: {addr[0]}")
+    print("[BT] Connected to device: {}".format(addr[0]))
     client.send(b"Connected to Raspberry Pi. Send ON / OFF\n")
 
     while True:
@@ -29,7 +29,7 @@ try:
         if not data:
             break
         cmd = data.decode("utf-8", errors="ignore").strip().upper()
-        print(f"[RX Bluetooth] Received: {cmd}")
+        print("[RX Bluetooth] Received: {}".format(cmd))
 
         if cmd == "ON":
             GPIO.output(LED_PIN, GPIO.HIGH)

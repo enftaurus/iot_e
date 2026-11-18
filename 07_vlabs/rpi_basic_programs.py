@@ -36,9 +36,9 @@ def dht11():
     sensor = adafruit_dht.DHT11(board.D4)
     while True:
         try:
-            print(f"Temp: {sensor.temperature} C | Humidity: {sensor.humidity} %")
+            print("Temp: {} C | Humidity: {} %".format(sensor.temperature, sensor.humidity))
         except RuntimeError as e:      # DHT reads fail often - just retry
-            print(f"Retry: {e}")
+            print("Retry: {}".format(e))
         time.sleep(2)
 
 
@@ -56,7 +56,7 @@ def ultrasonic():
         while GPIO.input(ECHO) == 1:
             end = time.time()
         distance = (end - start) * 34300 / 2
-        print(f"Distance: {distance:.1f} cm")
+        print("Distance: {:.1f} cm".format(distance))
         time.sleep(1)
 
 

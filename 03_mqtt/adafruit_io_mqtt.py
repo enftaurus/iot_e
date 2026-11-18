@@ -24,7 +24,7 @@ GPIO.setup(LED_PIN, GPIO.OUT)
 def connected(client):
     print("Connected to Adafruit IO MQTT broker (io.adafruit.com:1883)")
     client.subscribe(FEED_LED)
-    print(f"Subscribed to feed: {FEED_LED}")
+    print("Subscribed to feed: {}".format(FEED_LED))
 
 
 def disconnected(client):
@@ -32,10 +32,10 @@ def disconnected(client):
 
 
 def message(client, feed_id, payload):
-    print(f"[SUB] Feed {feed_id} -> {payload}")
+    print("[SUB] Feed {} -> {}".format(feed_id, payload))
     if feed_id == FEED_LED:
         GPIO.output(LED_PIN, GPIO.HIGH if payload.upper() == "ON" else GPIO.LOW)
-        print(f" -> LED {'ON' if payload.upper() == 'ON' else 'OFF'}")
+        print(" -> LED {}".format('ON' if payload.upper() == 'ON' else 'OFF'))
 
 
 client = MQTTClient(ADAFRUIT_IO_USERNAME, ADAFRUIT_IO_KEY)
@@ -49,7 +49,7 @@ try:
     while True:
         temp = round(random.uniform(26.0, 32.0), 1)
         client.publish(FEED_TEMP, temp)
-        print(f"[PUB] Feed {FEED_TEMP} -> {temp}")
+        print("[PUB] Feed {} -> {}".format(FEED_TEMP, temp))
         time.sleep(10)   # free tier: max 30 data points/minute
 except KeyboardInterrupt:
     client.disconnect()
