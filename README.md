@@ -8,7 +8,7 @@ Raspberry Pi (Python) programs for every topic in the lab exam syllabus, written
 | 2 | Bluetooth | `02_bluetooth/` | `bt_led_server.py` |
 | 3 | MQTT (Mosquitto + Adafruit IO) | `03_mqtt/` | `mqtt_publisher.py`, `mqtt_subscriber.py`, `adafruit_io_mqtt.py` |
 | 4 | OLED SSD1306 | `04_oled/` | `oled_iot_monitor.py` |
-| 5 | Zigbee (XBee) | `05_zigbee/` | `zigbee_coordinator.py`, `zigbee_router.py`, **`THEORY.md`** |
+| 5 | Zigbee (XBee via USB serial/COM port) | `05_zigbee/` | `zigbee_coordinator.py`, `zigbee_router.py`, **`THEORY.md`** |
 | 6 | BME280 → ThingSpeak | `06_bme280_thingspeak/` | `bme280_thingspeak.py` |
 | 7 | vlabs questions | `07_vlabs/` | `exp1`–`exp6` + `rpi_basic_programs.py` |
 
@@ -29,8 +29,7 @@ i2cdetect -y 1                          # OLED = 3c, BME280 = 76/77
 |---|---|---|
 | 3.3 V / 5 V / GND | – | 1 / 2 / 6 |
 | I2C SDA / SCL (OLED, BME280) | 2 / 3 | 3 / 5 |
-| UART TX / RX (XBee) | 14 / 15 | 8 / 10 |
-| LED (Bluetooth, MQTT, Zigbee) | 18 | 12 |
+| LED (Bluetooth, MQTT, Zigbee router) | 18 | 12 |
 | RGB R / G / B | 17 / 27 / 22 | 11 / 13 / 15 |
 
 Always put a 220 Ω resistor in series with each LED.
@@ -40,7 +39,7 @@ Always put a 220 Ω resistor in series with each LED.
 | Library | pip name | Used in |
 |---|---|---|
 | `RPi.GPIO` | `RPi.GPIO` (preinstalled) | LED, Bluetooth, MQTT, Zigbee |
-| `serial` | `pyserial` | Zigbee |
+| `serial` | `pyserial` | Zigbee (`/dev/ttyUSB0` serial port) |
 | `board`, `busio` | `adafruit-blinka` | OLED, BME280 |
 | `adafruit_ssd1306` | `adafruit-circuitpython-ssd1306` | OLED |
 | `PIL` | `pillow` | OLED drawing |

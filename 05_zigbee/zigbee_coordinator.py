@@ -1,11 +1,15 @@
 import serial
 import time
 
-# Initialize Raspberry Pi hardware UART connected to XBee Coordinator
-zigbee = serial.Serial('/dev/serial0', baudrate=9600, timeout=1)
+# XBee Coordinator plugged into Raspberry Pi via USB Explorer.
+# Find the port with: ls /dev/ttyUSB*   (Windows PC: 'COM3')
+PORT = '/dev/ttyUSB0'
+
+# Initialize serial (COM) port connected to XBee Coordinator
+zigbee = serial.Serial(PORT, baudrate=9600, timeout=1)
 packet_count = 0
 
-print("Zigbee Coordinator (Transmitter) Initialized on Raspberry Pi...")
+print(f"Zigbee Coordinator (Transmitter) Initialized on Raspberry Pi ({PORT})...")
 
 try:
     while True:

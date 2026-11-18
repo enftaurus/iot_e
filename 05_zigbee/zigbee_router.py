@@ -6,8 +6,12 @@ GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
 GPIO.setup(LED_PIN, GPIO.OUT)
 
-zigbee = serial.Serial('/dev/serial0', baudrate=9600, timeout=1)
-print("Zigbee Router/End-Device (Receiver) Ready on Raspberry Pi...")
+# XBee Router plugged into Raspberry Pi via USB Explorer.
+# Find the port with: ls /dev/ttyUSB*
+PORT = '/dev/ttyUSB0'
+
+zigbee = serial.Serial(PORT, baudrate=9600, timeout=1)
+print(f"Zigbee Router/End-Device (Receiver) Ready on Raspberry Pi ({PORT})...")
 
 try:
     while True:
